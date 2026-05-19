@@ -1,167 +1,98 @@
 #!/bin/bash
 
-# Colors (clean & safe)
-CYAN="\033[1;36m"
-GREEN="\033[1;32m"
-YELLOW="\033[1;33m"
-RED="\033[1;31m"
-NC="\033[0m"
-
 clear
 
-# Boot screen
-echo -e "${CYAN}"
 echo "======================================"
-echo "        MR SKY ESHAN"
-echo "     Installer Boot System"
+echo "        MR SKY ESHAN INSTALLER"
 echo "======================================"
-echo -e "${NC}"
 
-boot() {
-    echo -n "[+] $1"
-    for i in 1 2 3 4 5; do
-        echo -n "."
-        sleep 0.2
-    done
-    echo " ✔"
+sleep 1
+
+# MAIN MENU
+main_menu() {
+    clear
+    echo "======================================"
+    echo "            MAIN MENU"
+    echo "======================================"
+    echo "1) Panel Installation"
+    echo "2) Node Installation"
+    echo "3) Exit"
+    echo ""
+    read -p "Select option: " opt
+
+    case $opt in
+
+    1)
+        panel_menu
+        ;;
+
+    2)
+        node_install
+        ;;
+
+    3)
+        exit 0
+        ;;
+
+    *)
+        echo "Invalid option"
+        sleep 1
+        main_menu
+        ;;
+    esac
 }
 
-boot "Checking system"
-boot "Loading modules"
-boot "Starting menu"
-
-echo -e "\n${GREEN}[✓] READY${NC}"
-sleep 1
-clear
-
-# Menu loop
-while true; do
-
-echo -e "${CYAN}"
-echo "======================================"
-echo "          MR SKY ESHAN"
-echo "       Panels Installer Hub"
-echo "======================================"
-echo -e "${NC}"
-
-echo -e "${YELLOW}1) Skyport Installer${NC}"
-echo -e "${YELLOW}2) Puffer Panel V1${NC}"
-echo -e "${YELLOW}3) Draco Panel${NC}"
-echo -e "${YELLOW}4) AirLink Panel${NC}"
-echo -e "${YELLOW}5) Exit${NC}"
-echo ""
-
-read -p "Select option: " opt
-
-case $opt in
-
-1)
+# PANEL MENU (replaces old menu)
+panel_menu() {
     clear
-    echo -e "${GREEN}[+] Running Skyport Installer...${NC}"
-    sleep 1
+    echo "======================================"
+    echo "        PANEL INSTALLATION"
+    echo "======================================"
+    echo "1) Skyport Panel"
+    echo "2) Back to Main Menu"
+    echo ""
 
-    bash <(curl -s https://raw.githubusercontent.com/JishnuTheGamer/skyport/refs/heads/main/panel)
+    read -p "Select option: " p
 
-    echo -e "${CYAN}[✓] Done${NC}"
-    sleep 2
-    ;;
+    case $p in
 
-2)
-    clear
-    echo -e "${GREEN}[+] Running Puffer Panel...${NC#!/bin/bash
+    1)
+        clear
+        echo "[+] Installing Skyport Panel..."
+        bash <(curl -s https://raw.githubusercontent.com/JishnuTheGamer/skyport/refs/heads/main/panel)
+        echo "[✓] Panel Installed"
+        sleep 3
+        main_menu
+        ;;
 
-clear
-
-# Boot screen
-echo "======================================"
-echo "        MR SKY ESHAN"
-echo "     Installer Boot System"
-echo "======================================"
-
-boot() {
-    echo -n "[+] $1"
-    for i in 1 2 3 4 5; do
-        echo -n "."
-        sleep 0.2
-    done
-    echo " ✔"
+    2)
+        main_menu
+        ;;
+    esac
 }
 
-boot "Checking system"
-boot "Loading modules"
-boot "Starting menu"
-
-echo ""
-echo "[✓] READY"
-sleep 1
-clear
-
-# Menu loop
-while true; do
-
-echo "======================================"
-echo "          MR SKY ESHAN"
-echo "       Panels Installer Hub"
-echo "======================================"
-
-echo "1) Skyport Installer"
-echo "2) Puffer Panel V1"
-echo "3) Draco Panel"
-echo "4) AirLink Panel"
-echo "5) Exit"
-echo ""
-
-read -p "Select option: " opt
-
-case $opt in
-
-1)
+# NODE INSTALLATION FLOW
+node_install() {
     clear
-    echo "[+] Running Skyport Installer..."
-    sleep 1
+    echo "======================================"
+    echo "        NODE INSTALLATION"
+    echo "======================================"
 
-    bash <(curl -s https://raw.githubusercontent.com/JishnuTheGamer/skyport/refs/heads/main/panel)
+    echo "[+] Installing Wings/Node..."
+    bash <(curl -s https://raw.githubusercontent.com/JishnuTheGamer/skyport/refs/heads/main/wings)
 
-    echo "[✓] Done"
-    sleep 2
-    ;;
+    echo ""
+    echo "[IMPORTANT STEP]"
+    echo "1. Open your panel in browser"
+    echo "2. Change URL from localhost:3001 if needed"
+    echo "3. Then run: node ."
+    echo ""
 
-2)
-    clear
-    echo "[+] Running Puffer Panel..."
-    sleep 1
-    echo "Installer not added yet"
-    sleep 2
-    ;;
+    echo "Closing in 10 seconds..."
+    sleep 10
 
-3)
-    clear
-    echo "[+] Running Draco Panel..."
-    sleep 1
-    echo "Installer not added yet"
-    sleep 2
-    ;;
-
-4)
-    clear
-    echo "[+] Running AirLink Panel..."
-    sleep 1
-    echo "Installer not added yet"
-    sleep 2
-    ;;
-
-5)
-    echo "Exiting... Bye!"
     exit 0
-    ;;
+}
 
-*)
-    echo "Invalid option!"
-    sleep 1
-    ;;
-
-esac
-
-clear
-
-done
+# START
+main_menu
